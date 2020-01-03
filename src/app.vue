@@ -17,7 +17,7 @@
             <el-button type="primary" native-type="submit">検索</el-button>
         </el-form>
 
-        <el-pagination background layout="prev, pager, next" v-on:current-change="changePage" v-bind:total="count" v-bind:page-size="limit"></el-pagination>
+        <el-pagination background layout="prev, pager, next" v-on:current-change="changePage" v-bind:total="count" v-bind:current-page.sync="page" v-bind:page-size="limit"></el-pagination>
 
         <el-container v-for="result in results" class="result">
             <el-aside>
@@ -46,7 +46,7 @@
             </el-container>
         </el-container>
 
-        <el-pagination background layout="prev, pager, next" v-on:current-change="changePage" v-bind:total="count" v-bind:page-size="limit"></el-pagination>
+        <el-pagination background layout="prev, pager, next" v-on:current-change="changePage" v-bind:total="count" v-bind:current-page.sync="page" v-bind:page-size="limit"></el-pagination>
     </section>
 </template>
 
@@ -71,6 +71,7 @@
                 characters: [],
                 results: [],
                 count: 0,
+                page: 1,
                 limit: 10,
                 target_characters: [],
             };
@@ -110,6 +111,7 @@
                 });
             },
             changePage: function(page: number): void {
+                this.page = page;
                 this.getResults((page - 1) * this.limit);
             },
             getEpisodeType(type: number): string {
